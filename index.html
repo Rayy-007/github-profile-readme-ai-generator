@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Learnex — GitHub Workshop Toolkit</title>
+  <style>
+    :root {
+      --bg: #111827;
+      --card: #182235;
+      --card2: #202c40;
+      --text: #f9fafb;
+      --muted: #aab5c7;
+      --blue: #2563eb;
+      --orange: #f97316;
+      --teal: #14b8a6;
+      --line: #314057
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.5
+    }
+
+    .wrap {
+      max-width: 1050px;
+      margin: auto;
+      padding: 34px 20px 50px
+    }
+
+    .hero {
+      padding: 30px 0 24px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: .2px
+    }
+
+    .logo {
+      width: 150px;
+    }
+
+    .mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: var(--blue);
+      display: grid;
+      place-items: center;
+      font-weight: 900
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      margin: 18px 0 8px;
+      letter-spacing: -1.2px
+    }
+
+    .hero p {
+      max-width: 700px;
+      color: var(--muted);
+      font-size: 17px;
+      margin: 0
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 10px 0 24px
+    }
+
+    .tab {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700
+    }
+
+    .tab.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white
+    }
+
+    .panel {
+      display: none
+    }
+
+    .panel.active {
+      display: block
+    }
+
+    .section {
+      margin: 22px 0
+    }
+
+    .section h2 {
+      font-size: 22px;
+      margin: 0 0 5px
+    }
+
+    .section>p {
+      color: var(--muted);
+      margin-top: 0
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 16px
+    }
+
+    .check {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+      padding: 9px 0;
+      color: #e8edf5;
+      cursor: pointer
+    }
+
+    .check input {
+      accent-color: var(--blue);
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex: none
+    }
+
+    .check.done span {
+      text-decoration: line-through;
+      color: #7f8ba0
+    }
+
+    .progress {
+      height: 8px;
+      background: #0c1320;
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 12px 0 5px
+    }
+
+    .bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--teal));
+      width: 0%;
+      transition: .2s
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .prompt {
+      position: relative
+    }
+
+    .prompt pre {
+      white-space: pre-wrap;
+      background: #0d1420;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 0;
+      max-height: 430px;
+      overflow: auto;
+      color: #dce5f4;
+      font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace
+    }
+
+    .copy {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--blue);
+      color: white;
+      padding: 8px 11px;
+      font-weight: 700;
+      cursor: pointer
+    }
+
+    .resources {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px
+    }
+
+    .resource {
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 15px
+    }
+
+    .resource:hover {
+      border-color: var(--blue)
+    }
+
+    .resource b {
+      display: block;
+      margin-bottom: 4px
+    }
+
+    .resource span {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .note {
+      border-left: 3px solid var(--orange);
+      padding: 10px 13px;
+      background: rgba(249, 115, 22, .07);
+      color: #d9e0eb;
+      border-radius: 7px;
+      margin: 12px 0
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding-top: 30px
+    }
+
+    @media(max-width:700px) {
+
+      .grid,
+      .resources {
+        grid-template-columns: 1fr
+      }
+
+      .wrap {
+        padding: 24px 14px 40px
+      }
+
+      .hero {
+        padding-top: 15px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <div class="brand">
+        <img class="logo" src="./learnex-logo.png" alt="Learnex Logo">
+      </div>
+      <h1>GitHub Workshop Toolkit</h1>
+      <p>Build a clean, professional GitHub Profile README and Project README — with simple checklists, ready-to-copy AI
+        prompts, and useful resources.</p>
+    </header>
+    <nav class="tabs"><button class="tab active" data-tab="profile">Profile README</button><button class="tab"
+        data-tab="project">Project README</button><button class="tab" data-tab="resources">Resources</button></nav>
+    <section id="profile" class="panel active">
+      <div class="section">
+        <h2>Profile README Checklist</h2>
+        <p>Keep it simple. Show who you are, what you build, and where people can find you.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Basic</h3><label class="check"><input type="checkbox"><span>Name</span></label><label
+              class="check"><input type="checkbox"><span>Current role / student status</span></label><label
+              class="check"><input type="checkbox"><span>Short introduction</span></label><label class="check"><input
+                type="checkbox"><span>Current interest / learning direction</span></label>
+          </div>
+          <div class="card">
+            <h3>Skills</h3><label class="check"><input type="checkbox"><span>Main languages</span></label><label
+              class="check"><input type="checkbox"><span>Frameworks / libraries</span></label><label
+              class="check"><input type="checkbox"><span>Tools</span></label>
+          </div>
+          <div class="card">
+            <h3>Projects</h3><label class="check"><input type="checkbox"><span>2–4 best projects</span></label><label
+              class="check"><input type="checkbox"><span>Short project descriptions</span></label><label
+              class="check"><input type="checkbox"><span>GitHub / live links</span></label>
+          </div>
+          <div class="card">
+            <h3>Connect</h3><label class="check"><input type="checkbox"><span>LinkedIn / portfolio</span></label><label
+              class="check"><input type="checkbox"><span>Email / professional contact</span></label><label
+              class="check"><input type="checkbox"><span>1–2 useful GitHub stats widgets</span></label><label
+              class="check"><input type="checkbox"><span>Optional: one subtle GIF / animation</span></label>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px"><b>Progress</b>
+          <div class="progress">
+            <div class="bar"></div>
+          </div>
+          <div class="small progress-text">0% complete</div>
+        </div>
+      </div>
+      <div class="section">
+        <h2>AI Prompt</h2>
+        <p>Copy this prompt, answer the few questions, and let AI generate your README.</p>
+        <div class="card prompt"><button class="copy">Copy Prompt</button>
+          <pre>Create a clean, modern and professional GitHub Profile README for me.
+
+Before generating it, ask me ONLY these questions:
+
+1. What is your name and current role/status?
+2. Give me a short introduction about yourself and what you're interested in.
+3. What are your main skills/technologies?
+4. What are you currently learning?
+5. What are your 2–4 best projects? Give the name, short description, and GitHub/live link if available.
+6. Which professional links do you want to include? (LinkedIn, Portfolio, Email, etc.)
+7. What is your GitHub username?
+8. Which theme do you prefer for your GitHub stats? (For example: dark, light, or another theme you like.)
+
+After I answer, generate the final README directly.
+
+STYLE:
+
+- Professional but personal
+- Clean and modern
+- Short and easy to scan
+- No generic motivational quotes
+- No unnecessary sections
+- No excessive emojis
+- Don't invent information
+- Don't exaggerate my skills or experience
+
+INCLUDE:
+
+1. Short introduction
+2. About Me
+3. Skills
+4. Currently Learning
+5. Featured Projects
+6. GitHub Stats
+7. Social/Professional Links
+
+SKILLS:
+Use Skill Icons from:
+https://github.com/tandpfun/skill-icons
+
+Use this format:
+
+&lt;p align="center"&gt;
+  &lt;img src="https://skillicons.dev/icons?i=..." /&gt;
+&lt;/p&gt;
+
+Only include technologies I actually mention.
+
+STATS:
+Use a clean GitHub stats card and/or top languages card.
+Use GitHub Streak Stats from:
+https://streak-stats.demolab.com/demo/
+
+Use my GitHub username and preferred theme when creating the stats.
+Do not add fake or unsupported statistics.
+
+BADGES:
+Use a small number of useful profile badges, such as profile views, from:
+https://shields.io/badges
+
+Keep badges useful and visually clean. Do not overload the README with badges.
+
+SOCIAL LINKS:
+Use clean clickable icon/badge-style links instead of displaying raw URLs.
+
+GIF:
+You may include ONE small, subtle developer/programming GIF if it improves the design.
+Choose one related to my skills/interests from:
+https://giphy.com/explore/gifty
+Do not use a distracting or oversized GIF.
+
+Finally, give me:
+
+1. The complete ready-to-copy README.md
+2. A short note showing where I should replace/add my links or images.
+
+Do not explain your decisions unless I ask.</pre>
+        </div>
+      </div>
+    </section>
+    <section id="project" class="panel">
+      <div class="section">
+        <h2>Project README Checklist</h2>
+        <p>Make the repository easy to understand, run, and explore.</p>
+        <div class="grid">
+          <div class="card">
+            <h3>Basic</h3><label class="check"><input type="checkbox"><span>Project name</span></label><label
+              class="check"><input type="checkbox"><span>One-line description</span></label><label class="check"><input
+                type="checkbox"><span>Why you built it</span></label>
+          </div>
+          <div class="card">
+            <h3>Features</h3><label class="check"><input type="checkbox"><span>3–6 important
+                features</span></label><label class="check"><input type="checkbox"><span>Tech stack</span></label><label
+              class="check"><input type="checkbox"><span>Screenshot / GIF</span></label>
+          </div>
+          <div class="card">
+            <h3>Links</h3><label class="check"><input type="checkbox"><span>Live Demo</span></label><label
+              class="check"><input type="checkbox"><span>GitHub Repository</span></label>
+          </div>
+          <div class="card">
+            <h3>Setup</h3><label class="check"><input type="checkbox"><span>Installation command</span></label><label
+              class="check"><input type="checkbox"><span>Run command</span></label><label class="check"><input
+                type="checkbox"><span>What you learned</span></label><label class="check"><input
+                type="checkbox"><span>Future improvements (optional)</span></label>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px"><b>Progress</b>
+          <div class="progress">
+            <div class="bar"></div>
+          </div>
+          <div class="small progress-text">0% complete</div>
+        </div>
+      </div>
+      <div class="section">
+        <h2>AI Prompt</h2>
+        <p>Copy this prompt and provide only the project details you know.</p>
+        <div class="card prompt"><button class="copy">Copy Prompt</button>
+          <pre>Create a clean, modern and professional GitHub README.md for my project.
+
+Before generating it, ask me ONLY these questions:
+1. What is the project name and what does it do?
+2. Why did you build it?
+3. What are the main features?
+4. What technologies did you use?
+5. Do you have a Live Demo, GitHub link, screenshot or GIF?
+6. How do I install and run the project?
+
+After I answer, generate the final README.
+
+STYLE:
+- Professional, clean and easy to scan
+- Concise and developer-friendly
+- No unnecessary marketing language
+- No excessive emojis
+- Do not invent information
+- Do not add technologies or features I didn't mention
+
+STRUCTURE:
+# Project Name
+Short description
+
+## ✨ Features
+## 🛠️ Tech Stack
+## 📸 Preview
+## 🌐 Live Demo
+## 🚀 Getting Started
+## 📚 What I Learned
+## 🔮 Future Improvements (only if provided)
+
+SKILLS:
+Use Skill Icons from:
+https://github.com/tandpfun/skill-icons
+
+Use:
+&lt;p align="center"&gt;
+  &lt;img src="https://skillicons.dev/icons?i=..." /&gt;
+&lt;/p&gt;
+
+Only include technologies actually used.
+
+PREVIEW:
+Use my screenshot/GIF if I provide one.
+
+SETUP:
+Use the exact installation and run commands I provide. Do not guess.
+
+Finally, give me the complete ready-to-copy README.md inside ONE markdown code block.</pre>
+        </div>
+      </div>
+    </section>
+    <section id="resources" class="panel">
+      <div class="section">
+        <h2>Useful Resources</h2>
+        <p>Open these during or after the workshop.</p>
+        <div class="resources">
+          <a class="resource" target="_blank" href="https://docs.github.com/en/account-and-profile"><b>GitHub Profile
+              Guide ↗</b><span>Official GitHub account & profile documentation</span></a>
+          <a class="resource" target="_blank"
+            href="https://github.com/abhisheknaiidu/awesome-github-profile-readme?tab=readme-ov-file#categories"><b>Profile
+              README Guide ↗</b><span>Examples and inspiration for profile READMEs</span></a>
+          <a class="resource" target="_blank" href="https://docs.github.com/en/get-started/writing-on-github"><b>GitHub
+              Markdown Guide ↗</b><span>Learn GitHub Flavored Markdown</span></a>
+          <a class="resource" target="_blank" href="https://learn.github.com/skills"><b>GitHub Skills
+              ↗</b><span>Hands-on learning paths from GitHub</span></a>
+          <a class="resource" target="_blank"
+            href="https://rahuldkjain.github.io/gh-profile-readme-generator/"><b>Profile README Generator
+              ↗</b><span>Quick starting point for profile sections</span></a>
+          <a class="resource" target="_blank"
+            href="https://github.com/tandpfun/skill-icons?tab=readme-ov-file#icons-list"><b>Skill Icons ↗</b><span>Icons
+              for technologies in your README</span></a>
+          <a class="resource" target="_blank" href="https://github.com/anuraghazra/github-readme-stats"><b>GitHub Readme
+              Stats ↗</b><span>Optional stats cards for your README</span></a>
+        </div>
+        <div class="note">Tip: Keep your README useful, not overloaded. A clear intro, real skills, a few strong
+          projects, and useful links are enough.</div>
+      </div>
+    </section>
+    <footer class="footer">Learnex Space · Learn → Practice → Build → Grow</footer>
+  </main>
+  <script>
+    const tabs = document.querySelectorAll('.tab'), panels = document.querySelectorAll('.panel'); tabs.forEach(t => t.onclick = () => {tabs.forEach(x => x.classList.remove('active')); panels.forEach(x => x.classList.remove('active')); t.classList.add('active'); document.getElementById(t.dataset.tab).classList.add('active')});
+    function setupChecklist(panelId, key) {const panel = document.getElementById(panelId), boxes = [...panel.querySelectorAll('input[type=checkbox]')], bar = panel.querySelector('.bar'), txt = panel.querySelector('.progress-text'); const saved = JSON.parse(localStorage.getItem(key) || '[]'); boxes.forEach((b, i) => {b.checked = !!saved[i]; b.closest('.check').classList.toggle('done', b.checked); b.onchange = () => {b.closest('.check').classList.toggle('done', b.checked); localStorage.setItem(key, JSON.stringify(boxes.map(x => x.checked))); update()}}); function update() {const n = boxes.filter(x => x.checked).length, p = boxes.length ? Math.round(n / boxes.length * 100) : 0; bar.style.width = p + '%'; txt.textContent = p + '% complete · ' + n + '/' + boxes.length} update()}
+    setupChecklist('profile', 'learnex-profile-checks'); setupChecklist('project', 'learnex-project-checks');
+    document.querySelectorAll('.copy').forEach(btn => btn.onclick = async () => {const text = btn.parentElement.querySelector('pre').innerText; try {await navigator.clipboard.writeText(text); btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy Prompt', 1200)} catch (e) {btn.textContent = 'Select & Copy';} });
+  </script>
+</body>
+
+</html>
