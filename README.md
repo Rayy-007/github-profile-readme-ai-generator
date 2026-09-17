@@ -18,7 +18,8 @@ A beginner-friendly toolkit for creating clean, professional GitHub Profile READ
 
 ## 📸 Preview
 
-![GitHub Workshop Toolkit Preview](./preview.png)
+<img width="1295" height="787" alt="image" src="https://github.com/user-attachments/assets/cefda29a-53de-4659-8674-ac3f3e072d3e" />
+
 
 ## 🌐 Live Demo
 
